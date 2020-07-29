@@ -69,7 +69,7 @@ def task_list():
 
 @app.errorhandler(404)
 def notfound(code):
-    return "404エラーだぞ(#　ﾟдﾟ)"
+    return "404エラーやぞ！！(#　ﾟдﾟ)"
 
 if __name__ == '__main__':
     app.run(debug=True)
