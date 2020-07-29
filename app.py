@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,request,redirect
 import sqlite3
 app = Flask(__name__)
 
@@ -44,6 +44,32 @@ def dbtest():
 @app.route('/add')
 def add_get():
     return render_template('add.html')
+
+@app.route('/add',methods=['post'])
+def app_post():
+    py_task = request.form.get("task")
+    conn = sqlite3.connect('flasktest.db')
+    c = conn.cursor()
+    c.execute("INSERT INTO task VALUES (null,?)",(py_task,))
+    conn.commit()
+    conn.close()
+    return redirect('/list')
+
+@app.route('/list')
+def task_list():
+    conn = sqlite3.connect('flasktest.db')
+    c = conn.cursor()
+    c.execute("SELECT id , task FROM task")
+    task_list_py = []
+    for row in c.fetchall():
+        task_list_py.append({"id":row[0],"task":row[1]})
+    c.close()
+    print(task_list_py)
+    return render_template("tasklist.html",task_list = task_list_py )
+
+@app.errorhandler(404)
+def notfound(code):
+    return "404エラーだぞ(#　ﾟдﾟ)"
 
 if __name__ == '__main__':
     app.run(debug=True)
