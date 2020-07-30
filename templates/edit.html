@@ -2,7 +2,7 @@
 {%block content%}
 
 <form action="/edit" method="post">
-    <input type="text" maxlength="100" name="task_id" value="{{html_task['dic_id']}}">
+    <input type="hidden" maxlength="100" name="task_id" value="{{html_task['dic_id']}}">
     <input type="text" size="100" maxlength="100" name="task" value="{{html_task['dic_task']}}">
 
     <input type="submit" value="送信です!" name="save">
